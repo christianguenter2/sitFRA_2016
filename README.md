@@ -1,6 +1,13 @@
 # sitFRA_2016
-sitFRA 2016
 
-10 tips to improve your debugging workflow
+"        .__  __ _____________________    _____    _______________  ____  ________
+"   _____|__|/  |\_   _____/\______   \  /  _  \   \_____  \   _  \/_   |/  _____/
+"  /  ___/  \   __\    __)   |       _/ /  /_\  \   /  ____/  /_\  \|   /   __  \
+"  \___ \|  ||  | |     \    |    |   \/    |    \ /       \  \_/   \   \  |__\  \
+" /____  >__||__| \___  /    |____|_  /\____|__  / \_______ \_____  /___|\_____  /
+"      \/             \/            \/         \/          \/     \/           \/
+"
+"                 10 Tipps to improve your ABAP debugging workflow
+"
 
 http://wiki.scn.sap.com/wiki/display/events/SAP+Inside+Track+2016+Frankfurt+a.M.+%28Germany%29+%23sitFRA
