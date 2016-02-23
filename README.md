@@ -4,4 +4,4 @@
 
 http://wiki.scn.sap.com/wiki/display/events/SAP+Inside+Track+2016+Frankfurt+a.M.+%28Germany%29+%23sitFRA
 
-Minimum system requirements: 7.40 SP08
+Minimum system requirement: 7.40 SP08
