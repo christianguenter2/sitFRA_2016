@@ -2,7 +2,7 @@
 REPORT  rstpda_script_template.
 
 *<SCRIPT:HEADER>
-*<SCRIPTNAME>ZRSTPDA_SCRIPT_SHOW_LOG</SCRIPTNAME>
+*<SCRIPTNAME>ZRSTPDA_SCRIPT_WP_FIELD_SYMBOL</SCRIPTNAME>
 *<SCRIPT_CLASS>LCL_DEBUGGER_SCRIPT</SCRIPT_CLASS>
 *<SINGLE_STEP>X</SINGLE_STEP>
 
@@ -47,14 +47,14 @@ CLASS lcl_debugger_script IMPLEMENTATION.
 
     INSERT VALUE #( tabname   = 'DD03L'
                     fieldname = 'FIELDNAME'
-                    fieldtext = 'Field-Symbol'
+                    fieldtext = 'Field-Symbol'(001)
                     field_obl = abap_true )
            INTO TABLE fields
            REFERENCE INTO DATA(ref_field_symbol).
 
     CALL FUNCTION 'POPUP_GET_VALUES'
       EXPORTING
-        popup_title     = 'Field-Symbol'
+        popup_title     = text-001
       IMPORTING
         returncode      = returncode
       TABLES
@@ -75,7 +75,7 @@ CLASS lcl_debugger_script IMPLEMENTATION.
   METHOD script.
 
     TRY.
-        DATA(new_value) = cl_tpda_script_data_descr=>get_simple_value( CONV #( field_symbol ) ).
+        DATA(new_value) = cl_tpda_script_data_descr=>get_simple_value( field_symbol ).
 
         IF new_value <> old_value.
           DATA(text) = |Watchpoint { field_symbol } reached|.

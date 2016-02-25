@@ -89,82 +89,76 @@ ENDCLASS.
 
 CLASS sit_fra_debugging_tips DEFINITION.
   PUBLIC SECTION.
-    METHODS: start_presentation,
+    METHODS:
+      start_presentation,
       constructor.
 
   PRIVATE SECTION.
     METHODS:
       _0__intro,
-      _0_5_why,
-      _1__improve_your_workflow,
-      _2__debugger_steps,
-      _3__traces,
-      _4__layer_aware_debugging,
-      _5__auto_variable_tab,
-      _6__breakpoint_condition,
-      _7__watchpoint_condition,
-      _8__debugger_scripting,
-      _9__abap_in_eclipse,
-      _10_automate,
-      _11_do_debug_retrospectives,
-      _12_educate_yourself,
-      _13_the_end.
+      _0_5__why_improve_debugging,
+      _1__debugger_steps,
+      _2__traces,
+      _3__layer_aware_debugging,
+      _4__auto_variable_tab,
+      _5__breakpoint_condition,
+      _6__watchpoint_condition,
+      _7__debugger_scripting,
+      _8__abap_in_eclipse,
+      _9_automate,
+      _10_do_debug_retrospectives,
+      _11_educate_yourself,
+      _12_the_end.
 
     METHODS:
+
       _watchpoint_at_field_symbol,
+
       _bp_at_select_db_tab,
+
       _static_select,
+
       _dynamic_select,
+
       _select_with_joins,
 
       _bp_at_matching_pattern,
 
       _inspect_log,
 
-      _1__test RETURNING VALUE(r_success) TYPE abap_bool,
-      _2__test RETURNING VALUE(r_text) TYPE string.
+      _test_auto_1
+        RETURNING
+          VALUE(r_success) TYPE abap_bool,
 
-    METHODS:
+      _test_auto_2
+        RETURNING
+          VALUE(r_text) TYPE string,
+
       who_am_i
         IMPORTING
           name                        TYPE string OPTIONAL
           age                         TYPE int4   OPTIONAL
           company                     TYPE string OPTIONAL
           location                    TYPE string OPTIONAL
-          number_of_sap_inside_tracks TYPE int4   OPTIONAL.
+          job_title                   TYPE string OPTIONAL
+          number_of_sap_inside_tracks TYPE int4   OPTIONAL,
 
-    METHODS:
       the_topic_is_about
         IMPORTING
-          what TYPE string.
+          what TYPE string,
 
-    METHODS:
       the_goal_is
         IMPORTING
-          that_everyone TYPE string.
+          that_everyone TYPE string,
 
-    CONSTANTS: learns_at_least_one_new_thing TYPE string VALUE ''.
-
-    METHODS:
       what_do_we_while_debugging
         IMPORTING
-          we_use_the TYPE string.
+          we_use_the TYPE string,
 
-    CONSTANTS: scientific_method TYPE string VALUE ''.
-
-    METHODS:
       start_directly_from_debugger
         IMPORTING
-          trace TYPE string.
+          trace TYPE string,
 
-    CONSTANTS: st05 TYPE string VALUE '',
-               se30 TYPE string VALUE ''.
-
-
-
-    CONSTANTS: there_are_no_shortcuts TYPE string VALUE ''.
-
-    METHODS:
       use_your_keyboard,
 
       learn_the_shortcuts,
@@ -172,50 +166,43 @@ CLASS sit_fra_debugging_tips DEFINITION.
       use_alt_and_letter_shortcuts
         IMPORTING
           when TYPE string,
+
       automate_the_debugger_with
         IMPORTING
-          with TYPE string.
+          with TYPE string,
 
-    CONSTANTS: autohotkey                 TYPE string VALUE '',
-               autoit                     TYPE string VALUE '',
-               sap_gui_scripting          TYPE string VALUE '',
-               and_other_automation_tools TYPE string VALUE ''.
-
-    METHODS:
       you_should_watch
         IMPORTING
-          title     TYPE csequence
-          sub_title TYPE csequence
-          url       TYPE csequence
-          cost      TYPE csequence.
+          title    TYPE csequence
+          subtitle TYPE csequence
+          url      TYPE csequence
+          cost     TYPE csequence,
 
-    CONSTANTS:
-      debugging                    TYPE string VALUE '',
-      and_the_process_of_debugging TYPE string VALUE '',
-      after_a_successful_session   TYPE string VALUE ''.
+      you_should_read
+        IMPORTING
+          title    TYPE csequence
+          subtitle TYPE csequence
+          url      TYPE csequence
+          cost     TYPE csequence,
 
-    METHODS:
       think_about
         IMPORTING
-          what_to_think_about TYPE string.
+          what_to_think_about TYPE string,
 
-    METHODS:
       who_has_learned
         IMPORTING
-          what TYPE string.
+          what TYPE string,
 
-    CONSTANTS: at_least_one_new_thing TYPE string VALUE ''.
-
-    METHODS: thank_you,
+      thank_you,
 
       automate
         IMPORTING
           what            TYPE string OPTIONAL
           everything_that TYPE string OPTIONAL
-            PREFERRED PARAMETER what.
+            PREFERRED PARAMETER what,
 
-    CONSTANTS: the_boring_stuff TYPE string VALUE '',
-               breaks_your_flow TYPE string VALUE ''.
+      do_some_logging
+        RETURNING VALUE(ro_log) TYPE REF TO lcl_log.
 
     TYPES: BEGIN OF ty_data,
              i TYPE i,
@@ -226,9 +213,24 @@ CLASS sit_fra_debugging_tips DEFINITION.
 
     DATA: itab TYPE tty_data.
 
-    METHODS:
-      do_some_logging
-        RETURNING VALUE(ro_log) TYPE REF TO lcl_log.
+    CONSTANTS:
+
+      learns_at_least_one_new_thing TYPE string VALUE '',
+      scientific_method             TYPE string VALUE '',
+      st05                          TYPE string VALUE '',
+      se30                          TYPE string VALUE '',
+      there_are_no_shortcuts        TYPE string VALUE '',
+      autohotkey                    TYPE string VALUE '',
+      autoit                        TYPE string VALUE '',
+      sap_gui_scripting             TYPE string VALUE '',
+      and_other_automation_tools    TYPE string VALUE '',
+      debugging                     TYPE string VALUE '',
+      and_the_process_of_debugging  TYPE string VALUE '',
+      after_a_successful_session    TYPE string VALUE '',
+      at_least_one_new_thing        TYPE string VALUE '',
+      the_boring_stuff              TYPE string VALUE '',
+      breaks_your_flow              TYPE string VALUE ''.
+
 ENDCLASS.
 
 
@@ -263,19 +265,19 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
   METHOD start_presentation.
 
     _0__intro( ).
-    _1__improve_your_workflow( ).
-    _2__debugger_steps( ).
-    _3__traces( ).
-    _4__layer_aware_debugging( ).
-    _5__auto_variable_tab( ).
-    _6__breakpoint_condition( ).
-    _7__watchpoint_condition( ).
-    _8__debugger_scripting( ).
-    _9__abap_in_eclipse( ).
-    _10_automate( ).
-    _11_do_debug_retrospectives( ).
-    _12_educate_yourself( ).
-    _13_the_end( ).
+    _0_5__why_improve_debugging( ).
+    _1__debugger_steps( ).
+    _2__traces( ).
+    _3__layer_aware_debugging( ).
+    _4__auto_variable_tab( ).
+    _5__breakpoint_condition( ).
+    _6__watchpoint_condition( ).
+    _7__debugger_scripting( ).
+    _8__abap_in_eclipse( ).
+    _9_automate( ).
+    _10_do_debug_retrospectives( ).
+    _11_educate_yourself( ).
+    _12_the_end( ).
 
   ENDMETHOD.
 
@@ -308,11 +310,12 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
   METHOD _0__intro.
 
     who_am_i(:
-      name = 'Christian Günter'       ),
-      age = 29                        ),
-      company = 'Hansgrohe SE'        ),
-      location = 'Black Forest'       ),
-      number_of_sap_inside_tracks = 6 ).
+      name = 'Christian Günter'           ),
+      age = 29                            ),
+      company = 'Hansgrohe SE'            ),
+      location = 'Black Forest'           ),
+      job_title = 'SAP software engineer' ),
+      number_of_sap_inside_tracks = 6     ).
 
 
     the_topic_is_about(:
@@ -352,9 +355,6 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-  METHOD _0_5_why.
-
-  ENDMETHOD.
 
 
 
@@ -380,8 +380,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-
-  METHOD _1__improve_your_workflow.
+  METHOD _0_5__why_improve_debugging.
 
     what_do_we_while_debugging(
 
@@ -449,7 +448,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-  METHOD _2__debugger_steps.
+  METHOD _1__debugger_steps.
     "Stepwise debugging of statements
 
     IF    matches( regex = '\d{8}'
@@ -538,7 +537,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-  METHOD _8__debugger_scripting.
+  METHOD _7__debugger_scripting.
 
     " Stop when selecting specific DB-Table
     _bp_at_select_db_tab( ).
@@ -791,22 +790,9 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-  METHOD _4__layer_aware_debugging.
+  METHOD _3__layer_aware_debugging.
 
-    DATA: lt_data TYPE STANDARD TABLE OF t100
-                       WITH NON-UNIQUE DEFAULT KEY.
 
-    TRY .
-
-        cl_salv_table=>factory(
-              IMPORTING
-                r_salv_table   = DATA(alv)
-              CHANGING
-                t_table        = lt_data ).
-
-      CATCH cx_salv_msg INTO DATA(alv_error).
-
-    ENDTRY.
 
   ENDMETHOD.
 
@@ -835,10 +821,10 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-  METHOD _5__auto_variable_tab.
+  METHOD _4__auto_variable_tab.
 
-    IF _1__test( ) = abap_true AND
-       _2__test( ) = 'Hallo Welt!'.
+    IF _test_auto_1( ) = abap_true AND
+       _test_auto_2( ) = 'Hallo Welt!'.
 
       cl_demo_output=>display( 'Condition is true' ).
 
@@ -869,7 +855,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-  METHOD _1__test.
+  METHOD _test_auto_1.
 
     r_success = abap_true.
 
@@ -896,7 +882,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-  METHOD _2__test.
+  METHOD _test_auto_2.
 
     r_text = |Hallo Welt|.
 
@@ -925,7 +911,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-  METHOD _6__breakpoint_condition.
+  METHOD _5__breakpoint_condition.
 
     DATA(itab) = VALUE int_tab1( FOR n = 1
                                  WHILE n <= 100
@@ -965,7 +951,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-  METHOD _7__watchpoint_condition.
+  METHOD _6__watchpoint_condition.
 
     DO 100 TIMES.
 
@@ -993,7 +979,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-  METHOD _3__traces.
+  METHOD _2__traces.
 
     start_directly_from_debugger(:
 
@@ -1024,21 +1010,9 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-  METHOD _9__abap_in_eclipse.
-    TYPES: BEGIN OF ty_data,
-             i TYPE i,
-             s TYPE string,
-           END OF ty_data,
-           tty_data TYPE STANDARD TABLE OF ty_data WITH NON-UNIQUE DEFAULT KEY.
+  METHOD _8__abap_in_eclipse.
 
-    DATA(rnd) = cl_abap_random_int=>create( seed = CONV #( sy-uzeit )
-                                            min  = 0
-                                            max  = 100 ).
-
-    DATA(random_numbers) = VALUE tty_data( FOR n = 0
-                                           WHILE n < 10
-                                           ( i = rnd->get_next( )
-                                             s = 'Test' ) ).
+    " Dynamic Logpoints in AiE
 
   ENDMETHOD.
 
@@ -1067,7 +1041,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-  METHOD _10_automate.
+  METHOD _9_automate.
 
     use_your_keyboard( ).
 
@@ -1076,9 +1050,8 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
     use_alt_and_letter_shortcuts( when = there_are_no_shortcuts ).
 
     automate_the_debugger_with(:
-      autohotkey ),
-      autoit ),
       sap_gui_scripting ),
+      autohotkey ),
       and_other_automation_tools ).
 
     automate(:
@@ -1112,7 +1085,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-  METHOD _11_do_debug_retrospectives.
+  METHOD _10_do_debug_retrospectives.
 
     think_about(:
 
@@ -1149,13 +1122,20 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-  METHOD _12_educate_yourself.
+  METHOD _11_educate_yourself.
 
     you_should_watch(
       title     = 'Software Debugging'
-      sub_title = 'Automating the Boring Tasks'
+      subtitle = 'Automating the Boring Tasks'
       url       = 'https://www.udacity.com/courses/cs259'
       cost      = 'free' ).
+
+
+    you_should_read(
+      title     = 'Debug it!'
+      subtitle  = 'Find, Repair, and Prevent Bugs in Your Code (Pragmatic Programmers)'
+      url       = 'https://pragprog.com/book/pbdp/debug-it'
+      cost      = '~35 EUR'  ).
 
   ENDMETHOD.
 
@@ -1178,7 +1158,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-  METHOD _13_the_end.
+  METHOD _12_the_end.
 
 
     "        __  .__                                .___
@@ -1268,6 +1248,12 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
   METHOD you_should_watch.
 
+    CALL FUNCTION 'CALL_BROWSER'
+      EXPORTING
+        url    = url
+      EXCEPTIONS
+        OTHERS = 6.
+
   ENDMETHOD.
 
   METHOD who_has_learned.
@@ -1297,6 +1283,15 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
     ro_log->add_text( 'rocks!!!' ).
     ro_log->add_text( ';-)' ).
 
+  ENDMETHOD.
+
+  METHOD you_should_read.
+
+    CALL FUNCTION 'CALL_BROWSER'
+      EXPORTING
+        url    = url
+      EXCEPTIONS
+        OTHERS = 6.
   ENDMETHOD.
 
 ENDCLASS.

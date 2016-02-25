@@ -22,9 +22,9 @@ REPORT  rstpda_script_template.
 CLASS lcl_debugger_script DEFINITION INHERITING FROM  cl_tpda_script_class_super.
   PUBLIC SECTION.
     METHODS: prologue  REDEFINITION,
-             init      REDEFINITION,
-             script    REDEFINITION,
-             end       REDEFINITION.
+      init      REDEFINITION,
+      script    REDEFINITION,
+      end       REDEFINITION.
 
   PRIVATE SECTION.
 
@@ -47,14 +47,14 @@ CLASS lcl_debugger_script IMPLEMENTATION.
 
     INSERT VALUE #( tabname   = 'DD03L'
                     fieldname = 'FIELDNAME'
-                    FIELDTEXT = 'Pattern'
+                    fieldtext = 'Pattern'(001)
                     field_obl = abap_true )
            INTO TABLE fields
            ASSIGNING FIELD-SYMBOL(<filter>).
 
     CALL FUNCTION 'POPUP_GET_VALUES'
       EXPORTING
-        popup_title     = 'Filter'    " Text der Titelzeile
+        popup_title     = TEXT-001    " Text der Titelzeile
       IMPORTING
         returncode      = returncode    " Antwort des Anwenders
       TABLES

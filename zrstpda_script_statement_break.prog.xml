@@ -34,6 +34,12 @@
  </PROGDIR>
  <TEXTPOOL_TABLE>
   <TEXTPOOL>
+   <ID>I</ID>
+   <KEY>001</KEY>
+   <ENTRY>Pattern</ENTRY>
+   <LENGTH>17 </LENGTH>
+  </TEXTPOOL>
+  <TEXTPOOL>
    <ID>R</ID>
    <KEY></KEY>
    <ENTRY>Debugger Skript: Breakpoint at statement pattern match</ENTRY>

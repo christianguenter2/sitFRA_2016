@@ -2,7 +2,7 @@
 REPORT  rstpda_script_template.
 
 *<SCRIPT:HEADER>
-*<SCRIPTNAME>RSTPDA_SCRIPT_TEMPLATE</SCRIPTNAME>
+*<SCRIPTNAME>ZRSTPDA_SCRIPT_SHOW_LOG</SCRIPTNAME>
 *<SCRIPT_CLASS>LCL_DEBUGGER_SCRIPT</SCRIPT_CLASS>
 *<SCRIPT_COMMENT>Debugger Skript: Default Template</SCRIPT_COMMENT>
 *<SINGLE_STEP>X</SINGLE_STEP>
@@ -38,7 +38,10 @@ CLASS lcl_debugger_script DEFINITION INHERITING FROM  cl_tpda_script_class_super
           it_component TYPE abap_compdescr_tab
           i_line       TYPE any
         RETURNING
-          VALUE(r_log) TYPE bal_s_msg.
+          VALUE(r_log) TYPE bal_s_msg,
+      _display
+        IMPORTING
+          i_log_handles TYPE bal_t_logh.
 
     DATA: name_of_log TYPE string.
 
@@ -105,16 +108,19 @@ CLASS lcl_debugger_script IMPLEMENTATION.
           i_msgv1  = log-msgv1    " Message Variable
           i_msgv2  = log-msgv2    " Message Variable
           i_msgv3  = log-msgv3    " Message Variable
-          i_msgv4  = log-msgv4    " Message Variable
-      ).
+          i_msgv4  = log-msgv4 ).   " Message Variable
 
     ENDLOOP.
 
-    DATA: display_profile TYPE bal_s_prof.
+    _display( lo_log->if_sbal_logger~get_log_handles( ) ).
 
-    DATA(log_handles) = lo_log->if_sbal_logger~get_log_handles( ).
+  ENDMETHOD.
 
-    CHECK lines( log_handles ) > 0.
+  METHOD _display.
+
+    DATA display_profile TYPE bal_s_prof.
+
+    CHECK lines( i_log_handles ) > 0.
 
     CALL FUNCTION 'BAL_DSP_PROFILE_POPUP_GET'
       IMPORTING
@@ -125,7 +131,7 @@ CLASS lcl_debugger_script IMPLEMENTATION.
     CALL FUNCTION 'BAL_DSP_LOG_DISPLAY'
       EXPORTING
         i_s_display_profile  = display_profile    " Display Profile
-        i_t_log_handle       = log_handles
+        i_t_log_handle       = i_log_handles
       EXCEPTIONS
         profile_inconsistent = 1
         internal_error       = 2
@@ -138,8 +144,9 @@ CLASS lcl_debugger_script IMPLEMENTATION.
                  WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
     ENDIF.
 
+  ENDMETHOD.
 
-  ENDMETHOD.                    "script
+  "script
 
   METHOD end.
 *** insert your code which shall be executed at the end of the scripting (before trace is saved)
