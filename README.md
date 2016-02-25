@@ -1,6 +1,6 @@
 # sitFRA_2016
 
-10 Tipps to improve your ABAP debugging workflow
+**10 Tipps to improve your ABAP debugging workflow**
 
 http://wiki.scn.sap.com/wiki/display/events/SAP+Inside+Track+2016+Frankfurt+a.M.+%28Germany%29+%23sitFRA
 
