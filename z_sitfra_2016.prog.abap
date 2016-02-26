@@ -235,12 +235,12 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
   METHOD _0__intro.
 
     who_am_i(:
-      name = 'Christian Günter'           ),
-      age = 29                            ),
-      company = 'Hansgrohe SE'            ),
-      location = 'Black Forest'           ),
-      job_title = 'SAP software engineer' ),
-      number_of_sap_inside_tracks = 6     ).
+      name = 'Christian Günter'            ),
+      age = 29                             ),
+      company = 'Hansgrohe SE'             ),
+      location = 'Black Forest'            ),
+      job_title = 'SAP software developer' ),
+      number_of_sap_inside_tracks = 6      ).
 
 
     the_topic_is_about(:
