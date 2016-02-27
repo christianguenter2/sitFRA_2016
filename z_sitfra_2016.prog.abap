@@ -166,9 +166,9 @@ CLASS sit_fra_debugging_tips DEFINITION.
 
       learning_by_doing,
 
-    access_the_sources
-      IMPORTING
-          URL TYPE STRING.
+      access_the_sources
+        IMPORTING
+          url TYPE csequence.
 
 
     TYPES: BEGIN OF ty_data,
