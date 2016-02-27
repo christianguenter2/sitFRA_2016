@@ -26,11 +26,11 @@ CLASS sit_fra_debugging_tips DEFINITION.
       _2__traces,
       _3__layer_aware_debugging,
       _4__auto_variable_tab,
-      _5__breakpoint_condition,
-      _6__watchpoint_condition,
+      _5__conditional_watchpoint,
+      _6__conditional_breakpoint,
       _7__debugger_scripting,
       _8__abap_in_eclipse,
-      _9_automate,
+      _9__automate,
       _10_do_debug_retrospectives,
       _11_educate_yourself,
       _12_the_end.
@@ -47,7 +47,7 @@ CLASS sit_fra_debugging_tips DEFINITION.
 
       _select_with_joins,
 
-      _bp_at_matching_pattern,
+      _bp_at_pattern_match,
 
       _inspect_log,
 
@@ -127,7 +127,45 @@ CLASS sit_fra_debugging_tips DEFINITION.
             PREFERRED PARAMETER what,
 
       do_some_logging
-        RETURNING VALUE(ro_log) TYPE REF TO lcl_log.
+        RETURNING VALUE(ro_log) TYPE REF TO lcl_log,
+
+      chain
+        IMPORTING
+          in_1            TYPE csequence
+          in_2            TYPE csequence
+          in_3            TYPE csequence
+        RETURNING
+          VALUE(r_result) TYPE string,
+
+      chain_in_1
+        RETURNING
+          VALUE(r_result) TYPE string,
+
+      chain_in_2
+        RETURNING
+          VALUE(r_result) TYPE string,
+
+      chain_in_3
+        RETURNING
+          VALUE(r_result) TYPE string,
+
+      do_complex_stuff
+        IMPORTING
+          in TYPE i
+        EXCEPTIONS
+          something_went_wrong,
+
+      do_other_stuff
+        IMPORTING
+          in TYPE i
+        EXCEPTIONS
+          something_went_wrong
+          fatal_error,
+
+      do_stuff,
+
+      learn_by_doing.
+
 
     TYPES: BEGIN OF ty_data,
              i TYPE i,
@@ -147,6 +185,7 @@ CLASS sit_fra_debugging_tips DEFINITION.
       there_are_no_shortcuts        TYPE string VALUE '',
       autohotkey                    TYPE string VALUE '',
       autoit                        TYPE string VALUE '',
+      debugger_scripting            TYPE string VALUE '',
       sap_gui_scripting             TYPE string VALUE '',
       and_other_automation_tools    TYPE string VALUE '',
       debugging                     TYPE string VALUE '',
@@ -195,11 +234,11 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
     _2__traces( ).
     _3__layer_aware_debugging( ).
     _4__auto_variable_tab( ).
-    _5__breakpoint_condition( ).
-    _6__watchpoint_condition( ).
+    _5__conditional_watchpoint( ).
+    _6__conditional_breakpoint( ).
     _7__debugger_scripting( ).
     _8__abap_in_eclipse( ).
-    _9_automate( ).
+    _9__automate( ).
     _10_do_debug_retrospectives( ).
     _11_educate_yourself( ).
     _12_the_end( ).
@@ -470,7 +509,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
     _watchpoint_at_field_symbol( ).
 
     " Stop when matching a specific pattern in the Source-Code line
-    _bp_at_matching_pattern( ).
+    _bp_at_pattern_match( ).
 
     _inspect_log( ).
 
@@ -652,7 +691,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-  METHOD _bp_at_matching_pattern.
+  METHOD _bp_at_pattern_match.
 
     DATA(booking_code) = '0123'.
 
@@ -755,6 +794,10 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
     ENDIF.
 
+    DATA(chain_result) = chain( in_1 = chain_in_1( )
+                                in_2 = chain_in_2( )
+                                in_3 = chain_in_3( ) ).
+
   ENDMETHOD.
 
 
@@ -830,23 +873,9 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
+  METHOD _5__conditional_watchpoint.
 
-
-
-
-
-
-  METHOD _5__breakpoint_condition.
-
-    DATA(itab) = VALUE int_tab1( FOR n = 1
-                                 WHILE n <= 100
-                                 ( n ) ).
-
-    LOOP AT itab ASSIGNING FIELD-SYMBOL(<i>).
-      IF 1 = 1.
-
-      ENDIF.
-    ENDLOOP.
+    do_stuff( ).
 
   ENDMETHOD.
 
@@ -866,23 +895,25 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
+  METHOD _6__conditional_breakpoint.
 
-
-
-
-
-
-
-
-
-
-  METHOD _6__watchpoint_condition.
-
-    DO 100 TIMES.
-
-    ENDDO.
+    do_stuff( ).
 
   ENDMETHOD.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -966,7 +997,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-  METHOD _9_automate.
+  METHOD _9__automate.
 
     use_your_keyboard( ).
 
@@ -975,6 +1006,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
     use_alt_and_letter_shortcuts( when = there_are_no_shortcuts ).
 
     automate_the_debugger_with(:
+      debugger_scripting ),
       sap_gui_scripting ),
       autohotkey ),
       and_other_automation_tools ).
@@ -1061,6 +1093,8 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
       subtitle  = 'Find, Repair, and Prevent Bugs in Your Code (Pragmatic Programmers)'
       url       = 'https://pragprog.com/book/pbdp/debug-it'
       cost      = '~35 EUR'  ).
+
+    learn_by_doing( ).
 
   ENDMETHOD.
 
@@ -1217,6 +1251,101 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
         url    = url
       EXCEPTIONS
         OTHERS = 6.
+  ENDMETHOD.
+
+
+  METHOD chain.
+
+    r_result = |{ in_1 } { in_2 } { in_3 }|.
+
+  ENDMETHOD.
+
+
+  METHOD chain_in_1.
+
+    r_result = |sitFRA 2016|.
+
+  ENDMETHOD.
+
+
+  METHOD chain_in_2.
+
+    r_result = |is really|.
+
+  ENDMETHOD.
+
+
+  METHOD chain_in_3.
+
+    r_result = |cool!|.
+
+  ENDMETHOD.
+
+
+  METHOD do_complex_stuff.
+
+    IF in MOD 33 = 0.
+
+      RAISE something_went_wrong.
+
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD do_other_stuff.
+
+    IF in MOD 55 = 0.
+
+      RAISE fatal_error.
+
+    ENDIF.
+
+    IF in MOD 5 = 0.
+
+      RAISE something_went_wrong.
+
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD do_stuff.
+
+    DATA(itab) = VALUE int_tab1( FOR n = 1
+                                 WHILE n <= 100
+                                 ( n ) ).
+
+    LOOP AT itab ASSIGNING FIELD-SYMBOL(<i>).
+
+      do_complex_stuff(
+        EXPORTING
+           in = <i>
+        EXCEPTIONS
+           something_went_wrong = 1 ).
+
+      IF sy-subrc <> 0.
+
+      ENDIF.
+
+      do_other_stuff(
+        EXPORTING
+            in = <i>
+        EXCEPTIONS
+            something_went_wrong = 1
+            fatal_error          = 2 ).
+
+      IF sy-subrc <> 0.
+
+      ENDIF.
+
+    ENDLOOP.
+
+  ENDMETHOD.
+
+
+  METHOD learn_by_doing.
+
   ENDMETHOD.
 
 ENDCLASS.
