@@ -164,7 +164,11 @@ CLASS sit_fra_debugging_tips DEFINITION.
 
       do_stuff,
 
-      learn_by_doing.
+      learning_by_doing,
+
+    access_the_sources
+      IMPORTING
+          URL TYPE STRING.
 
 
     TYPES: BEGIN OF ty_data,
@@ -1094,7 +1098,9 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
       url       = 'https://pragprog.com/book/pbdp/debug-it'
       cost      = '~35 EUR'  ).
 
-    learn_by_doing( ).
+    learning_by_doing( ).
+
+    access_the_sources( url = 'https://github.com/christianguenter2/sitFRA_2016' ).
 
   ENDMETHOD.
 
@@ -1344,7 +1350,18 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD learn_by_doing.
+  METHOD learning_by_doing.
+
+  ENDMETHOD.
+
+
+  METHOD access_the_sources.
+
+    CALL FUNCTION 'CALL_BROWSER'
+      EXPORTING
+        url    = url
+      EXCEPTIONS
+        OTHERS = 6.
 
   ENDMETHOD.
 
