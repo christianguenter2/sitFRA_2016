@@ -9,7 +9,7 @@ INCLUDE z_sitfra_2016_.
 " /____  >__||__| \___  /    |____|_  /\____|__  / \_______ \_____  /___|\_____  /
 "      \/             \/            \/         \/          \/     \/           \/
 "
-"                 10 Tipps to improve your ABAP debugging workflow
+"                 10 tips to improve your ABAP debugging workflow
 "
 
 CLASS sit_fra_debugging_tips DEFINITION.
@@ -183,7 +183,7 @@ ENDCLASS.
 " /____  >__||__| \___  /    |____|_  /\____|__  / \_______ \_____  /___|\_____  /
 "      \/             \/            \/         \/          \/     \/           \/
 "
-"                 10 Tipps to improve your ABAP debugging workflow
+"                 10 tips to improve your ABAP debugging workflow
 "
 
 CLASS sit_fra_debugging_tips IMPLEMENTATION.
