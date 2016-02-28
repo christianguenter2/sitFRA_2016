@@ -6,6 +6,6 @@ http://wiki.scn.sap.com/wiki/display/events/SAP+Inside+Track+2016+Frankfurt+a.M.
 
 Minimum system requirements: Netweaver 7.40 SP08
 
-Tip 9 requires 7.50
+Tip 8 requires 7.50
 
 Install with abapGit https://github.com/larshp/abapGit
