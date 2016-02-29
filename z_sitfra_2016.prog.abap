@@ -128,6 +128,8 @@ CLASS sit_fra_debugging_tips DEFINITION.
           everything_that TYPE string OPTIONAL
             PREFERRED PARAMETER what,
 
+      but_it_is_very_personal,
+
       do_some_logging
         RETURNING VALUE(ro_log) TYPE REF TO lcl_log,
 
@@ -1057,6 +1059,8 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
         everything_that = breaks_your_flow ).
 
+    but_it_is_very_personal( ).
+
   ENDMETHOD.
 
 
@@ -1270,6 +1274,10 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD automate.
+
+  ENDMETHOD.
+
+  METHOD but_it_is_very_personal.
 
   ENDMETHOD.
 
