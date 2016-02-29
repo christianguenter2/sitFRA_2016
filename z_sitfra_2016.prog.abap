@@ -92,6 +92,8 @@ CLASS sit_fra_debugging_tips DEFINITION.
         IMPORTING
           when TYPE string,
 
+      context_menu,
+
       automate_the_debugger_with
         IMPORTING
           with TYPE string,
@@ -1041,6 +1043,8 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
     use_alt_and_letter_shortcuts( when = there_are_no_shortcuts ).
 
+    context_menu( ).
+
     automate_the_debugger_with(:
       debugger_scripting ),
       sap_gui_scripting ),
@@ -1232,6 +1236,10 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD use_alt_and_letter_shortcuts.
+
+  ENDMETHOD.
+
+  METHOD context_menu.
 
   ENDMETHOD.
 
