@@ -78,7 +78,7 @@ CLASS sit_fra_debugging_tips DEFINITION.
 
       what_do_we_while_debugging
         IMPORTING
-          we_use_the TYPE string,
+          we_apply_the TYPE string,
 
       start_directly_from_debugger
         IMPORTING
@@ -168,8 +168,20 @@ CLASS sit_fra_debugging_tips DEFINITION.
 
       access_the_sources
         IMPORTING
-          url TYPE csequence.
+          url TYPE csequence,
 
+      what_makes_a_good_debugger
+        IMPORTING one_third TYPE string,
+
+      we_focus_on_the_tools
+        IMPORTING
+          know_your_tools              TYPE abap_bool
+          apply_your_tools_efficiently TYPE abap_bool.
+
+    CONSTANTS:
+      experience TYPE string VALUE '',
+      intuition  TYPE string VALUE '',
+      tools      TYPE string VALUE ''.
 
     TYPES: BEGIN OF ty_data,
              i TYPE i,
@@ -350,9 +362,28 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
   METHOD _0_5__why_improve_debugging.
 
-    what_do_we_while_debugging(
 
-        we_use_the = scientific_method ).
+    what_makes_a_good_debugger(:
+        one_third = experience ),
+        one_third = intuition ),
+        one_third = tools ).
+
+
+    we_focus_on_the_tools(
+        know_your_tools              = abap_true
+        apply_your_tools_efficiently = abap_true ).
+
+
+
+
+
+
+
+
+
+
+    what_do_we_while_debugging(
+        we_apply_the = scientific_method ).
 
 
     "
@@ -360,7 +391,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
     "
     "
     "             +-----------+
-    "             |Observation|         observe failure
+    "             |Observation|         observe failure (bug)
     "             +----+------+
     "                  |
     "                  |
@@ -383,14 +414,9 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
     "                  |
     "                  |
     "                  v
-    "               +--+---+
-    "               |Theory|            the hypothesis can no longer be refined
-    "               +------+
-
-
-
-    " Be aware that you can improve your debug workflow!
-    " It's a skill like each other and it can be honed
+    "             +----+-----+
+    "             |root Cause|          the hypothesis can no longer be refined
+    "             +----------+
 
 
   ENDMETHOD.
@@ -417,6 +443,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
   METHOD _1__debugger_steps.
+
     "Stepwise debugging of statements
 
     IF    matches( regex = '\d{8}'
@@ -429,8 +456,13 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
                 val2 = '123.1' ) = 123
       AND itab = VALUE tty_data( ( i = 1 s = 'Test'  )
                                  ( i = 2 s = `1234 ` ) ).
+
       cl_demo_output=>display( 'Condition is true' ).
+
     ENDIF.
+
+
+
 
     IF 1 = 1.
 
@@ -1362,6 +1394,14 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
         url    = url
       EXCEPTIONS
         OTHERS = 6.
+
+  ENDMETHOD.
+
+  METHOD we_focus_on_the_tools.
+
+  ENDMETHOD.
+
+  METHOD what_makes_a_good_debugger.
 
   ENDMETHOD.
 
