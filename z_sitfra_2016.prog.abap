@@ -76,9 +76,7 @@ CLASS sit_fra_debugging_tips DEFINITION.
         IMPORTING
           that_everyone TYPE string,
 
-      what_do_we_while_debugging
-        IMPORTING
-          we_apply_the TYPE string,
+      apply_the_scientific_method,
 
       start_directly_from_debugger
         IMPORTING
@@ -175,7 +173,7 @@ CLASS sit_fra_debugging_tips DEFINITION.
           url TYPE csequence,
 
       what_makes_a_good_debugger
-        IMPORTING one_third TYPE string,
+        IMPORTING ingredient TYPE string,
 
       we_focus_on_the_tools
         IMPORTING
@@ -185,7 +183,8 @@ CLASS sit_fra_debugging_tips DEFINITION.
     CONSTANTS:
       experience TYPE string VALUE '',
       intuition  TYPE string VALUE '',
-      tools      TYPE string VALUE ''.
+      tools      TYPE string VALUE '',
+      luck       TYPE string VALUE ''.
 
     TYPES: BEGIN OF ty_data,
              i TYPE i,
@@ -199,7 +198,6 @@ CLASS sit_fra_debugging_tips DEFINITION.
     CONSTANTS:
 
       learns_at_least_one_new_thing TYPE string VALUE '',
-      scientific_method             TYPE string VALUE '',
       st05                          TYPE string VALUE '',
       se30                          TYPE string VALUE '',
       there_are_no_shortcuts        TYPE string VALUE '',
@@ -368,13 +366,19 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
     what_makes_a_good_debugger(:
-        one_third = experience ),
-        one_third = intuition ),
-        one_third = tools ).
+
+        experience ),
+        intuition ),
+        tools ),
+        luck ).
+
+
 
 
     we_focus_on_the_tools(
+
         know_your_tools              = abap_true
+
         apply_your_tools_efficiently = abap_true ).
 
 
@@ -386,8 +390,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-    what_do_we_while_debugging(
-        we_apply_the = scientific_method ).
+    apply_the_scientific_method( ).
 
 
     "
@@ -1214,7 +1217,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
   ENDMETHOD.
 
-  METHOD what_do_we_while_debugging.
+  METHOD apply_the_scientific_method.
 
   ENDMETHOD.
 
