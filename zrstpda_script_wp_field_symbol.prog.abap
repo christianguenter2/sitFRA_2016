@@ -74,6 +74,8 @@ CLASS lcl_debugger_script IMPLEMENTATION.
 
   METHOD script.
 
+    CHECK field_symbol IS NOT INITIAL.
+
     TRY.
         DATA(new_value) = cl_tpda_script_data_descr=>get_simple_value( field_symbol ).
 
