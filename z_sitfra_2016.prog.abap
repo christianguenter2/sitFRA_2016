@@ -177,8 +177,8 @@ CLASS sit_fra_debugging_tips DEFINITION.
 
       we_focus_on_the_tools
         IMPORTING
-          know_your_tools              TYPE abap_bool
-          apply_your_tools_efficiently TYPE abap_bool.
+          know_your_tools              TYPE abap_bool OPTIONAL
+          apply_your_tools_efficiently TYPE abap_bool OPTIONAL.
 
     CONSTANTS:
       experience TYPE string VALUE '',
@@ -375,9 +375,9 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-    we_focus_on_the_tools(
+    we_focus_on_the_tools(:
 
-        know_your_tools              = abap_true
+        know_your_tools              = abap_true ),
 
         apply_your_tools_efficiently = abap_true ).
 
@@ -390,8 +390,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-    apply_the_scientific_method( ).
-
+    apply_the_scientific_method(
 
     "
     "         THE SCIENTIFIC METHOD
@@ -424,6 +423,8 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
     "             +----+-----+
     "             |root Cause|          the hypothesis can no longer be refined
     "             +----------+
+
+    ).
 
 
   ENDMETHOD.
@@ -1130,7 +1131,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
     you_should_watch(
       title     = 'Software Debugging'
-      subtitle = 'Automating the Boring Tasks'
+      subtitle  = 'Automating the Boring Tasks'
       url       = 'https://www.udacity.com/courses/cs259'
       cost      = 'free' ).
 
