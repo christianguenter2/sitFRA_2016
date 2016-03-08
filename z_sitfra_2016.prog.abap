@@ -30,7 +30,7 @@ CLASS sit_fra_debugging_tips DEFINITION.
       _6__conditional_breakpoint,
       _7__debugger_scripting,
       _8__abap_in_eclipse,
-      _9__automate,
+      _9__automation,
       _10_do_debug_retrospectives,
       _11_educate_yourself,
       _12_the_end.
@@ -172,6 +172,10 @@ CLASS sit_fra_debugging_tips DEFINITION.
         IMPORTING
           url TYPE csequence,
 
+      watch_the_video
+        IMPORTING
+          url TYPE csequence,
+
       what_makes_a_good_debugger
         IMPORTING ingredient TYPE string,
 
@@ -256,7 +260,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
     _6__conditional_breakpoint( ).
     _7__debugger_scripting( ).
     _8__abap_in_eclipse( ).
-    _9__automate( ).
+    _9__automation( ).
     _10_do_debug_retrospectives( ).
     _11_educate_yourself( ).
     _12_the_end( ).
@@ -1041,7 +1045,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-  METHOD _9__automate.
+  METHOD _9__automation.
 
     use_your_keyboard( ).
 
@@ -1145,6 +1149,9 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
     learning_by_doing( ).
 
     access_the_sources( url = 'https://github.com/christianguenter2/sitFRA_2016' ).
+
+    watch_the_video( url = 'https://www.livecoding.tv/masterrx/' ).
+
 
   ENDMETHOD.
 
@@ -1408,6 +1415,16 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
   METHOD access_the_sources.
+
+    CALL FUNCTION 'CALL_BROWSER'
+      EXPORTING
+        url    = url
+      EXCEPTIONS
+        OTHERS = 6.
+
+  ENDMETHOD.
+
+  METHOD watch_the_video .
 
     CALL FUNCTION 'CALL_BROWSER'
       EXPORTING
