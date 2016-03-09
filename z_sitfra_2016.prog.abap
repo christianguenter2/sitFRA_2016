@@ -407,8 +407,8 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
     "                  |
     "                  v
     "             +----+-----+
-    "     +------>+Hypothesis|          invent hypothesis which is consistent with observation
-    "     |       +----+-----+
+    "     +------>+Hypothesis|          invent hypothesis
+    "     |       +----+-----+          which is consistent with observation
     "     |            |
     "     |            |
     "     |            v
@@ -425,8 +425,8 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
     "                  |
     "                  v
     "             +----+-----+
-    "             |root Cause|          the hypothesis can no longer be refined
-    "             +----------+
+    "             |root Cause|          the hypothesis can
+    "             +----------+          no longer be refined
 
     ).
 
