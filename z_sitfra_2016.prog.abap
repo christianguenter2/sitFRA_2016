@@ -1150,7 +1150,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
     access_the_sources( url = 'https://github.com/christianguenter2/sitFRA_2016' ).
 
-    watch_the_video( url = 'https://www.livecoding.tv/masterrx/' ).
+    watch_the_video( url = 'https://www.livecoding.tv/masterrx/videos/' ).
 
 
   ENDMETHOD.
