@@ -7,7 +7,7 @@ Minimum system requirements: Netweaver 7.40 SP08
 Tip 8 requires 7.50
 
 Install with abapGit https://github.com/larshp/abapGit
-
+and start debugging at method start_presentation
 
 
 http://wiki.scn.sap.com/wiki/display/events/SAP+Inside+Track+2016+Frankfurt+a.M.+%28Germany%29+%23sitFRA
