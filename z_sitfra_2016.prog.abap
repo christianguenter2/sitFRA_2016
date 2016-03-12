@@ -66,7 +66,8 @@ CLASS sit_fra_debugging_tips DEFINITION.
           company                     TYPE string OPTIONAL
           location                    TYPE string OPTIONAL
           job_title                   TYPE string OPTIONAL
-          number_of_sap_inside_tracks TYPE int4   OPTIONAL,
+          number_of_sap_inside_tracks TYPE int4   OPTIONAL
+          first_time_speaker          TYPE abap_bool OPTIONAL,
 
       the_topic_is_about
         IMPORTING
@@ -301,7 +302,8 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
       company = 'Hansgrohe SE'             ),
       location = 'Black Forest'            ),
       job_title = 'SAP software developer' ),
-      number_of_sap_inside_tracks = 6      ).
+      number_of_sap_inside_tracks = 6      ),
+      first_time_speaker = abap_true       ).
 
 
     the_topic_is_about(:
