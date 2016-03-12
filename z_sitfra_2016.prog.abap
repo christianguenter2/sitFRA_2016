@@ -412,12 +412,6 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
     "     |            |
     "     |            |
     "     |            v
-    "     |       +----+-----+
-    "     |       |Prediction|          make a prediction
-    "     |       +----+-----+
-    "     |            |
-    "     |            |
-    "     |            v
     "     |       +----+-----+          test the hypothesis by experiments
     "     +-------+Experiment|          refine the hypothesis
     "             +----+-----+          create alternative hypothesis
@@ -659,7 +653,10 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
   METHOD _static_select.
 
-    SELECT * FROM t100 INTO TABLE @DATA(lt_data)
+    SELECT * FROM t100a INTO TABLE @DATA(t100a_tab)
+             UP TO 10 ROWS.
+
+    SELECT * FROM t100 INTO TABLE @DATA(t100_tab)
              UP TO 10 ROWS.
 
   ENDMETHOD.
@@ -683,11 +680,21 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
   METHOD _dynamic_select.
 
-    DATA: lt_data TYPE STANDARD TABLE OF t100
-                       WITH NON-UNIQUE EMPTY KEY.
-    DATA(table) = |T100|.
+    DATA: t100a_tab TYPE STANDARD TABLE OF t100a
+                         WITH NON-UNIQUE EMPTY KEY.
 
-    SELECT * INTO TABLE lt_data
+    DATA: t100_tab TYPE STANDARD TABLE OF t100
+                        WITH NON-UNIQUE EMPTY KEY.
+
+    DATA(table) = |T100A|.
+
+    SELECT * INTO TABLE t100a_tab
+             FROM (table)
+             UP TO 10 ROWS.
+
+    table = |T100|.
+
+    SELECT * INTO TABLE t100_tab
              FROM (table)
              UP TO 10 ROWS.
 
