@@ -19,10 +19,13 @@ http://scn.sap.com/community/events/inside-track/blog/2016/03/09/sap-inside-trac
 Livecoding.tv
 
 https://www.livecoding.tv/masterrx/videos/xY3Y0-abap-debugging-part-1
+
 https://www.livecoding.tv/masterrx/videos/a9xEB-abap-debugging-part-2
 
 Youtube
+
 https://youtu.be/yHXd_PvH_s4
+
 https://youtu.be/taaQhpy1SVc
 
 
