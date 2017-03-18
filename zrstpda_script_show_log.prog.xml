@@ -1,43 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<abapGit version="v0.2-alpha">
- <PROGDIR>
-  <NAME>ZRSTPDA_SCRIPT_SHOW_LOG</NAME>
-  <STATE>A</STATE>
-  <SQLX></SQLX>
-  <EDTX></EDTX>
-  <VARCL>X</VARCL>
-  <DBAPL></DBAPL>
-  <DBNA></DBNA>
-  <CLAS></CLAS>
-  <TYPE></TYPE>
-  <OCCURS></OCCURS>
-  <SUBC>S</SUBC>
-  <APPL></APPL>
-  <SECU></SECU>
-  <CNAM></CNAM>
-  <CDAT>00000000</CDAT>
-  <UNAM></UNAM>
-  <UDAT>00000000</UDAT>
-  <VERN></VERN>
-  <LEVL></LEVL>
-  <RSTAT></RSTAT>
-  <RMAND></RMAND>
-  <RLOAD>E</RLOAD>
-  <FIXPT>X</FIXPT>
-  <SSET></SSET>
-  <SDATE>00000000</SDATE>
-  <STIME></STIME>
-  <IDATE>00000000</IDATE>
-  <ITIME></ITIME>
-  <LDBNAME></LDBNAME>
-  <UCCHECK>X</UCCHECK>
- </PROGDIR>
- <TEXTPOOL_TABLE>
-  <TEXTPOOL>
-   <ID>R</ID>
-   <KEY></KEY>
-   <ENTRY>Debugger Script: Show Log</ENTRY>
-   <LENGTH>25 </LENGTH>
-  </TEXTPOOL>
- </TEXTPOOL_TABLE>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_PROG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <PROGDIR>
+    <NAME>ZRSTPDA_SCRIPT_SHOW_LOG</NAME>
+    <STATE>A</STATE>
+    <VARCL>X</VARCL>
+    <SUBC>S</SUBC>
+    <RLOAD>E</RLOAD>
+    <FIXPT>X</FIXPT>
+    <UCCHECK>X</UCCHECK>
+   </PROGDIR>
+   <TPOOL>
+    <item>
+     <ID>R</ID>
+     <ENTRY>Debugger Script: Show Log</ENTRY>
+     <LENGTH>25</LENGTH>
+    </item>
+   </TPOOL>
+  </asx:values>
+ </asx:abap>
 </abapGit>
