@@ -1,5 +1,5 @@
 *<SCRIPT:PERSISTENT>
-REPORT  rstpda_script_template.
+REPORT zrstpda_script_statement_break.
 
 *<SCRIPT:HEADER>
 *<SCRIPTNAME>ZRSTPDA_SCRIPT_STATEMENT_BREAK</SCRIPTNAME>
@@ -49,13 +49,21 @@ CLASS lcl_source_code_info DEFINITION.
   PRIVATE SECTION.
 
     CLASS-METHODS:
-      _get_source
+      get_source
         IMPORTING
-          !i_program     TYPE csequence
+          i_program     TYPE csequence
         EXPORTING
-          !et_source     TYPE stringtab
-          !et_tokens     TYPE stokesx_tab
-          !et_statements TYPE sstmnt_tab .
+          et_source     TYPE stringtab
+          et_tokens     TYPE stokesx_tab
+          et_statements TYPE sstmnt_tab ,
+
+      get_start_statement
+        IMPORTING
+          start_source_line TYPE i
+          statements        TYPE sstmnt_tab
+        EXPORTING
+          e_start_row       TYPE i
+          e_start_index     TYPE i.
 
     TYPES: BEGIN OF ty_scan,
              program    TYPE tpda_program,
@@ -155,15 +163,12 @@ CLASS lcl_source_code_info IMPLEMENTATION.
           tokens         TYPE stokesx_tab,
           statements     TYPE sstmnt_tab,
           source_trace   LIKE LINE OF ct_source,
-          tabix          TYPE syst-tabix,
-          line           TYPE i,
-          found          TYPE abap_bool.
+          start_tabix    TYPE syst-tabix,
+          start_row      TYPE stmnt_trow.
 
-    FIELD-SYMBOLS: <start_statement> LIKE LINE OF statements,
-                   <end_statement>   LIKE LINE OF statements,
-                   <source_line>     LIKE LINE OF include_source.
+    FIELD-SYMBOLS:  <end_statement>   LIKE LINE OF statements.
 
-    _get_source(
+    get_source(
       EXPORTING
         i_program     = i_source_info-include
       IMPORTING
@@ -171,60 +176,40 @@ CLASS lcl_source_code_info IMPLEMENTATION.
         et_tokens     = tokens
         et_statements = statements ).
 
-    " get statement before current line
-    WHILE found = abap_false.
+    get_start_statement(
+     EXPORTING
+       start_source_line    = i_source_info-line
+       statements    = statements
+     IMPORTING
+       e_start_row   = start_row
+       e_start_index = start_tabix ).
 
-      line = i_source_info-line - sy-index.
+    CHECK start_row IS NOT INITIAL.
 
-      IF line <= 0.
-        EXIT.
-      ENDIF.
-
-      READ TABLE statements ASSIGNING <start_statement>
-                            WITH KEY trow = line
-                            BINARY SEARCH.
-      IF sy-subrc = 0.
-        found = abap_true.
-        tabix = sy-tabix.
-      ENDIF.
-
-    ENDWHILE.
-
-    CHECK <start_statement> IS ASSIGNED.
-
-    ADD 1 TO tabix.
-
-    READ TABLE statements ASSIGNING <end_statement> INDEX tabix.
+    READ TABLE statements ASSIGNING <end_statement> INDEX start_tabix + 1.
     CHECK sy-subrc = 0.
 
-    line = <start_statement>-trow.
+    DATA(whole_statement_source) = REDUCE string( INIT result = ||
+                                                  FOR i = start_row + 1
+                                                  WHILE i <= <end_statement>-trow
+                                                  LET source_line = include_source[ i ]
+                                                  IN
+                                                  NEXT result = result && source_line ).
 
-    DO <end_statement>-trow - <start_statement>-trow TIMES.
-      ADD 1 TO line.
-      READ TABLE tokens TRANSPORTING NO FIELDS
-                        WITH KEY row = line
-                        BINARY SEARCH.
-      CHECK sy-subrc = 0.
+    IF i_filter IS NOT INITIAL.
+      CHECK whole_statement_source IN i_filter.
+    ENDIF.
 
-      READ TABLE include_source ASSIGNING <source_line>
-                                INDEX line.
-      CHECK sy-subrc = 0.
-
-      source_trace-statement    = <source_line>.
-
-      IF i_filter IS NOT INITIAL.
-        CHECK <source_line> IN i_filter.
-      ENDIF.
-      source_trace-program      = i_source_info-prg_info-program.
-      source_trace-include      = i_source_info-prg_info-include.
-      source_trace-line         = line.
-      INSERT source_trace INTO TABLE ct_source.
-    ENDDO.
+    source_trace-statement    = whole_statement_source.
+    source_trace-program      = i_source_info-prg_info-program.
+    source_trace-include      = i_source_info-prg_info-include.
+    source_trace-line         = i_source_info-line.
+    INSERT source_trace INTO TABLE ct_source.
 
   ENDMETHOD.
 
 
-  METHOD _get_source.
+  METHOD get_source.
 
     DATA: scan_buffer_line LIKE LINE OF scan_buffer.
 
@@ -255,6 +240,40 @@ CLASS lcl_source_code_info IMPLEMENTATION.
     et_statements = scan_buffer_line-statements.
 
   ENDMETHOD.
+
+  METHOD get_start_statement.
+
+    DATA: found TYPE abap_bool,
+          line  TYPE i.
+
+    CLEAR: e_start_index,
+           e_start_row.
+
+    " get statement before current line
+    WHILE found = abap_false.
+
+      line = start_source_line - sy-index.
+
+      IF line <= 0.
+        EXIT.
+      ENDIF.
+
+      READ TABLE statements ASSIGNING FIELD-SYMBOL(<start_statement>)
+                            WITH KEY trow = line
+                            BINARY SEARCH.
+      IF sy-subrc = 0.
+        found = abap_true.
+        e_start_index = sy-tabix.
+      ENDIF.
+
+    ENDWHILE.
+
+    IF <start_statement> IS ASSIGNED.
+      e_start_row = <start_statement>-trow.
+    ENDIF.
+
+  ENDMETHOD.
+
 ENDCLASS.
 
 
