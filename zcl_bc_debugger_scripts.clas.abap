@@ -38,7 +38,7 @@ ENDCLASS.
 
 
 
-CLASS ZCL_BC_DEBUGGER_SCRIPTS IMPLEMENTATION.
+CLASS zcl_bc_debugger_scripts IMPLEMENTATION.
 
 
   METHOD get_source_info_extended.
@@ -47,7 +47,8 @@ CLASS ZCL_BC_DEBUGGER_SCRIPTS IMPLEMENTATION.
           statements     TYPE sstmnt_tab,
           source_trace   LIKE LINE OF ct_source,
           tabix          TYPE syst-tabix,
-          line           TYPE i.
+          line           TYPE i,
+          found          TYPE abap_bool.
 
     FIELD-SYMBOLS: <start_statement> LIKE LINE OF statements,
                    <end_statement>   LIKE LINE OF statements,
@@ -58,11 +59,26 @@ CLASS ZCL_BC_DEBUGGER_SCRIPTS IMPLEMENTATION.
                            et_tokens     = tokens
                            et_statements = statements ).
 
-    LOOP AT statements ASSIGNING <start_statement> WHERE trow < i_source_info-line.
-      tabix = sy-tabix.
-    ENDLOOP.
+    " get statement before current line
+    WHILE found = abap_false.
 
-    CHECK sy-subrc = 0.
+      line = i_source_info-line - sy-index.
+
+      IF line <= 0.
+        EXIT.
+      ENDIF.
+
+      READ TABLE statements ASSIGNING <start_statement>
+                            WITH KEY trow = line
+                            BINARY SEARCH.
+      IF sy-subrc = 0.
+        found = abap_true.
+        tabix = sy-tabix.
+      ENDIF.
+
+    ENDWHILE.
+
+    CHECK <start_statement> IS ASSIGNED.
 
     ADD 1 TO tabix.
 
@@ -74,7 +90,8 @@ CLASS ZCL_BC_DEBUGGER_SCRIPTS IMPLEMENTATION.
     DO <end_statement>-trow - <start_statement>-trow TIMES.
       ADD 1 TO line.
       READ TABLE tokens TRANSPORTING NO FIELDS
-                        WITH KEY row = line.
+                        WITH KEY row = line
+                        BINARY SEARCH.
       CHECK sy-subrc = 0.
 
       READ TABLE include_source ASSIGNING <source_line>
