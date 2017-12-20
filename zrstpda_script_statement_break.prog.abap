@@ -259,8 +259,8 @@ CLASS lcl_source_code_info IMPLEMENTATION.
       ENDIF.
 
       READ TABLE i_statements ASSIGNING FIELD-SYMBOL(<start_statement>)
-                            WITH KEY trow = line
-                            BINARY SEARCH.
+                              WITH KEY trow = line
+                              BINARY SEARCH.
       IF sy-subrc = 0.
         found = abap_true.
         e_start_index = sy-tabix.
