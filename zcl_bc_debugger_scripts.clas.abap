@@ -5,24 +5,24 @@ CLASS zcl_bc_debugger_scripts DEFINITION
 
   PUBLIC SECTION.
 
-    CLASS-METHODS get_source_info_extended
-      IMPORTING
-        !i_source_info  TYPE tpda_curr_source_pos
-        !i_source_trace TYPE tpda_ast_src OPTIONAL
-        !i_filter       TYPE tpda_range_it OPTIONAL
-      CHANGING
-        !ct_source      TYPE tpda_ast_src_it .
-  PROTECTED SECTION.
+    CLASS-METHODS:
+      get_source_info_extended
+        IMPORTING
+          !i_source_info TYPE tpda_curr_source_pos
+          !i_filter      TYPE tpda_range_it OPTIONAL
+        CHANGING
+          !ct_source     TYPE tpda_ast_src_it .
+
   PRIVATE SECTION.
 
-    CLASS-METHODS _get_source
-      IMPORTING
-        !i_program     TYPE csequence
-      EXPORTING
-        !et_source     TYPE stringtab
-        !et_tokens     TYPE stokesx_tab
-        !et_statements TYPE sstmnt_tab .
-
+    CLASS-METHODS:
+      _get_source
+        IMPORTING
+          !i_program     TYPE csequence
+        EXPORTING
+          !et_source     TYPE stringtab
+          !et_tokens     TYPE stokesx_tab
+          !et_statements TYPE sstmnt_tab .
 
     TYPES: BEGIN OF ty_scan,
              program    TYPE tpda_program,
@@ -34,14 +34,16 @@ CLASS zcl_bc_debugger_scripts DEFINITION
                WITH UNIQUE KEY program.
 
     CLASS-DATA: scan_buffer      TYPE tty_scan.
+
 ENDCLASS.
 
 
 
-CLASS zcl_bc_debugger_scripts IMPLEMENTATION.
+CLASS ZCL_BC_DEBUGGER_SCRIPTS IMPLEMENTATION.
 
 
   METHOD get_source_info_extended.
+
     DATA: include_source TYPE stringtab,
           tokens         TYPE stokesx_tab,
           statements     TYPE sstmnt_tab,
@@ -54,10 +56,13 @@ CLASS zcl_bc_debugger_scripts IMPLEMENTATION.
                    <end_statement>   LIKE LINE OF statements,
                    <source_line>     LIKE LINE OF include_source.
 
-    _get_source( EXPORTING i_program     = i_source_info-include
-                 IMPORTING et_source     = include_source
-                           et_tokens     = tokens
-                           et_statements = statements ).
+    _get_source(
+      EXPORTING
+        i_program     = i_source_info-include
+      IMPORTING
+        et_source     = include_source
+        et_tokens     = tokens
+        et_statements = statements ).
 
     " get statement before current line
     WHILE found = abap_false.
@@ -103,17 +108,17 @@ CLASS zcl_bc_debugger_scripts IMPLEMENTATION.
       IF i_filter IS NOT INITIAL.
         CHECK <source_line> IN i_filter.
       ENDIF.
-      source_trace-trace_index  = i_source_trace-trace_index.
-      source_trace-action_index = i_source_trace-action_index.
       source_trace-program      = i_source_info-prg_info-program.
       source_trace-include      = i_source_info-prg_info-include.
       source_trace-line         = line.
       INSERT source_trace INTO TABLE ct_source.
     ENDDO.
+
   ENDMETHOD.
 
 
   METHOD _get_source.
+
     DATA: scan_buffer_line LIKE LINE OF scan_buffer.
 
     FIELD-SYMBOLS: <scan_buffer_line> LIKE LINE OF scan_buffer.
@@ -141,5 +146,6 @@ CLASS zcl_bc_debugger_scripts IMPLEMENTATION.
     et_source     = scan_buffer_line-source.
     et_tokens     = scan_buffer_line-tokens.
     et_statements = scan_buffer_line-statements.
+
   ENDMETHOD.
 ENDCLASS.
