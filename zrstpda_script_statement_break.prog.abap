@@ -59,11 +59,11 @@ CLASS lcl_source_code_info DEFINITION.
 
       get_start_statement
         IMPORTING
-          start_source_line TYPE i
-          statements        TYPE sstmnt_tab
+          i_start_source_line TYPE i
+          i_statements        TYPE sstmnt_tab
         EXPORTING
-          e_start_row       TYPE i
-          e_start_index     TYPE i.
+          e_start_row         TYPE i
+          e_start_index       TYPE i.
 
     TYPES: BEGIN OF ty_scan,
              program    TYPE tpda_program,
@@ -178,11 +178,11 @@ CLASS lcl_source_code_info IMPLEMENTATION.
 
     get_start_statement(
      EXPORTING
-       start_source_line    = i_source_info-line
-       statements    = statements
+       i_start_source_line = i_source_info-line
+       i_statements        = statements
      IMPORTING
-       e_start_row   = start_row
-       e_start_index = start_tabix ).
+       e_start_row         = start_row
+       e_start_index       = start_tabix ).
 
     CHECK start_row IS NOT INITIAL.
 
@@ -190,9 +190,9 @@ CLASS lcl_source_code_info IMPLEMENTATION.
     CHECK sy-subrc = 0.
 
     DATA(whole_statement_source) = REDUCE string( INIT result = ||
-                                                  FOR i = start_row + 1
-                                                  WHILE i <= <end_statement>-trow
-                                                  LET source_line = include_source[ i ]
+                                                  FOR index = start_row + 1
+                                                  WHILE index <= <end_statement>-trow
+                                                  LET source_line = include_source[ index ]
                                                   IN
                                                   NEXT result = result && source_line ).
 
@@ -252,13 +252,13 @@ CLASS lcl_source_code_info IMPLEMENTATION.
     " get statement before current line
     WHILE found = abap_false.
 
-      line = start_source_line - sy-index.
+      line = i_start_source_line - sy-index.
 
       IF line <= 0.
         EXIT.
       ENDIF.
 
-      READ TABLE statements ASSIGNING FIELD-SYMBOL(<start_statement>)
+      READ TABLE i_statements ASSIGNING FIELD-SYMBOL(<start_statement>)
                             WITH KEY trow = line
                             BINARY SEARCH.
       IF sy-subrc = 0.
