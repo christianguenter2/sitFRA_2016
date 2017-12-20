@@ -20,6 +20,7 @@ REPORT  rstpda_script_template.
 *
 *---------------------------------------------------------------------*
 CLASS lcl_debugger_script DEFINITION INHERITING FROM  cl_tpda_script_class_super.
+
   PUBLIC SECTION.
     METHODS: prologue  REDEFINITION,
       init      REDEFINITION,
@@ -30,6 +31,7 @@ CLASS lcl_debugger_script DEFINITION INHERITING FROM  cl_tpda_script_class_super
 
     DATA: filter     TYPE tpda_range_it,
           returncode TYPE char01.
+
 ENDCLASS.                    "lcl_debugger_script DEFINITION
 *---------------------------------------------------------------------*
 *       CLASS lcl_debugger_script IMPLEMENTATION
@@ -54,11 +56,11 @@ CLASS lcl_debugger_script IMPLEMENTATION.
 
     CALL FUNCTION 'POPUP_GET_VALUES'
       EXPORTING
-        popup_title     = TEXT-001    " Text der Titelzeile
+        popup_title     = TEXT-001
       IMPORTING
-        returncode      = returncode    " Antwort des Anwenders
+        returncode      = returncode
       TABLES
-        fields          = fields    " Tabellenfelder, Werte und Attribute
+        fields          = fields
       EXCEPTIONS
         error_in_fields = 1
         OTHERS          = 2.
@@ -67,10 +69,12 @@ CLASS lcl_debugger_script IMPLEMENTATION.
 
     INSERT VALUE #( sign   = 'I'
                     option = 'CP'
-                    low    = |*{ <filter>-value }*| ) INTO TABLE filter.
+                    low    = |*{ to_upper( <filter>-value ) }*| ) INTO TABLE filter.
+
   ENDMETHOD.                    "init
 
   METHOD script.
+
     DATA: source_info TYPE tpda_curr_source_pos,
           source      TYPE tpda_ast_src_it.
 
@@ -88,14 +92,15 @@ CLASS lcl_debugger_script IMPLEMENTATION.
 
     zcl_bc_debugger_scripts=>get_source_info_extended(
       EXPORTING
-        i_source_info  = source_info    " TPDA; Sttaische Source Position für Navigation
-        i_filter       = filter    " TPDA: Generische Range Tabelle
+        i_source_info  = source_info
+        i_filter       = filter
       CHANGING
         ct_source      = source ).
 
     IF lines( source ) > 0.
       me->break( ).
     ENDIF.
+
   ENDMETHOD.                    "script
 
   METHOD end.
