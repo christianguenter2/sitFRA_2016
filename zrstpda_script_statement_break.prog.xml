@@ -19,6 +19,12 @@
      <LENGTH>17</LENGTH>
     </item>
     <item>
+     <ID>I</ID>
+     <KEY>002</KEY>
+     <ENTRY>Regex?</ENTRY>
+     <LENGTH>16</LENGTH>
+    </item>
+    <item>
      <ID>R</ID>
      <ENTRY>Debugger Skript: Breakpoint at statement pattern match</ENTRY>
      <LENGTH>54</LENGTH>

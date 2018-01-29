@@ -22,15 +22,17 @@ REPORT zrstpda_script_statement_break.
 CLASS lcl_debugger_script DEFINITION INHERITING FROM  cl_tpda_script_class_super.
 
   PUBLIC SECTION.
-    METHODS: prologue  REDEFINITION,
-      init      REDEFINITION,
-      script    REDEFINITION,
-      end       REDEFINITION.
+    METHODS:
+      prologue REDEFINITION,
+      init     REDEFINITION,
+      script   REDEFINITION,
+      end      REDEFINITION.
 
   PRIVATE SECTION.
 
-    DATA: filter     TYPE tpda_range_it,
-          returncode TYPE char01.
+    DATA: m_filter     TYPE string,
+          m_returncode TYPE char01,
+          m_is_regex   TYPE abap_bool.
 
 ENDCLASS.                    "lcl_debugger_script DEFINITION
 
@@ -42,7 +44,8 @@ CLASS lcl_source_code_info DEFINITION.
       get_source_info_extended
         IMPORTING
           !i_source_info TYPE tpda_curr_source_pos
-          !i_filter      TYPE tpda_range_it OPTIONAL
+          !i_filter      TYPE csequence OPTIONAL
+          i_is_regex     TYPE abap_bool OPTIONAL
         CHANGING
           !ct_source     TYPE tpda_ast_src_it .
 
@@ -74,7 +77,7 @@ CLASS lcl_source_code_info DEFINITION.
            tty_scan TYPE HASHED TABLE OF ty_scan
                WITH UNIQUE KEY program.
 
-    CLASS-DATA: scan_buffer      TYPE tty_scan.
+    CLASS-DATA: scan_buffer TYPE tty_scan.
 
 ENDCLASS.
 
@@ -94,29 +97,38 @@ CLASS lcl_debugger_script IMPLEMENTATION.
 
     DATA: fields TYPE STANDARD TABLE OF sval.
 
-    INSERT VALUE #( tabname   = 'DD03L'
-                    fieldname = 'FIELDNAME'
+    INSERT VALUE #( tabname   = 'CAWN'
+                    fieldname = 'ATWRT'
                     fieldtext = 'Pattern'(001)
                     field_obl = abap_true )
            INTO TABLE fields
            ASSIGNING FIELD-SYMBOL(<filter>).
 
+    INSERT VALUE #( tabname   = 'DD03L'
+                    fieldname = 'KEYFLAG'
+                    fieldtext = 'Regex?'(002) )
+           INTO TABLE fields
+           ASSIGNING FIELD-SYMBOL(<regex>).
+
     CALL FUNCTION 'POPUP_GET_VALUES'
       EXPORTING
         popup_title     = TEXT-001
       IMPORTING
-        returncode      = returncode
+        returncode      = m_returncode
       TABLES
         fields          = fields
       EXCEPTIONS
         error_in_fields = 1
         OTHERS          = 2.
 
+    IF sy-subrc <> 0 OR m_returncode IS NOT INITIAL.
+      end( ).
+    ENDIF.
+
     CHECK sy-subrc = 0.
 
-    INSERT VALUE #( sign   = 'I'
-                    option = 'CP'
-                    low    = |*{ to_upper( <filter>-value ) }*| ) INTO TABLE filter.
+    m_filter = <filter>-value.
+    m_is_regex = <regex>-value.
 
   ENDMETHOD.                    "init
 
@@ -125,8 +137,9 @@ CLASS lcl_debugger_script IMPLEMENTATION.
     DATA: source_info TYPE tpda_curr_source_pos,
           source      TYPE tpda_ast_src_it.
 
-    CHECK: returncode IS INITIAL,
-           lines( filter ) > 0.
+    IF m_filter IS INITIAL.
+      end( ).
+    ENDIF.
 
     TRY.
         cl_tpda_script_abapdescr=>get_abap_src_info(
@@ -140,7 +153,8 @@ CLASS lcl_debugger_script IMPLEMENTATION.
     lcl_source_code_info=>get_source_info_extended(
       EXPORTING
         i_source_info  = source_info
-        i_filter       = filter
+        i_filter       = m_filter
+        i_is_regex     = m_is_regex
       CHANGING
         ct_source      = source ).
 
@@ -164,7 +178,8 @@ CLASS lcl_source_code_info IMPLEMENTATION.
           statements     TYPE sstmnt_tab,
           source_trace   LIKE LINE OF ct_source,
           start_tabix    TYPE syst-tabix,
-          start_row      TYPE stmnt_trow.
+          start_row      TYPE stmnt_trow,
+          lt_filter      TYPE tpda_range_it.
 
     FIELD-SYMBOLS:  <end_statement>   LIKE LINE OF statements.
 
@@ -196,8 +211,22 @@ CLASS lcl_source_code_info IMPLEMENTATION.
                                                   IN
                                                   NEXT result = result && source_line ).
 
-    IF i_filter IS NOT INITIAL.
-      CHECK whole_statement_source IN i_filter.
+    IF i_is_regex = abap_true.
+
+      IF find( val   = whole_statement_source
+               regex = i_filter  ) = -1.
+        RETURN.
+      ENDIF.
+
+    ELSE.
+
+      INSERT VALUE #( sign   = 'I'
+                      option = 'CP'
+                      low    = |*{ to_upper( i_filter ) }*| ) INTO TABLE lt_filter.
+      IF NOT whole_statement_source IN lt_filter.
+        RETURN.
+      ENDIF.
+
     ENDIF.
 
     source_trace-statement    = whole_statement_source.

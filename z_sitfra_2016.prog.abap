@@ -270,6 +270,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
     _5__conditional_watchpoint( ).
     _6__conditional_breakpoint( ).
     _7__debugger_scripting( ).
+    _8__debug_external_dialog( ).
     _9__abap_in_eclipse( ).
     _10_automation( ).
     _11_do_debug_retrospectives( ).
@@ -1182,6 +1183,8 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
   METHOD _12_educate_yourself.
 
+    CHECK 1 = 0.
+
     you_should_watch(
       title     = 'Software Debugging'
       subtitle  = 'Automating the Boring Tasks'
@@ -1434,9 +1437,9 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
       do_complex_stuff(
         EXPORTING
-           in = <i>
+          in = <i>
         EXCEPTIONS
-           something_went_wrong = 1 ).
+          something_went_wrong = 1 ).
 
       IF sy-subrc <> 0.
 
@@ -1444,10 +1447,10 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
       do_other_stuff(
         EXPORTING
-            in = <i>
+          in = <i>
         EXCEPTIONS
-            something_went_wrong = 1
-            fatal_error          = 2 ).
+          something_went_wrong = 1
+          fatal_error          = 2 ).
 
       IF sy-subrc <> 0.
 
