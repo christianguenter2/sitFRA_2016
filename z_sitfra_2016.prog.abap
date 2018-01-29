@@ -29,11 +29,12 @@ CLASS sit_fra_debugging_tips DEFINITION.
       _5__conditional_watchpoint,
       _6__conditional_breakpoint,
       _7__debugger_scripting,
-      _8__abap_in_eclipse,
-      _9__automation,
-      _10_do_debug_retrospectives,
-      _11_educate_yourself,
-      _12_the_end.
+      _8__debug_external_dialog,
+      _9__abap_in_eclipse,
+      _10_automation,
+      _11_do_debug_retrospectives,
+      _12_educate_yourself,
+      _13_the_end.
 
     METHODS:
 
@@ -183,7 +184,16 @@ CLASS sit_fra_debugging_tips DEFINITION.
       we_focus_on_the_tools
         IMPORTING
           know_your_tools              TYPE abap_bool OPTIONAL
-          apply_your_tools_efficiently TYPE abap_bool OPTIONAL.
+          apply_your_tools_efficiently TYPE abap_bool OPTIONAL,
+      set_external_breakpoint,
+
+      set_user_to_dialog_user
+        IMPORTING
+          i_path TYPE csequence,
+
+      dialog_user_execute_ok_code
+        IMPORTING
+          i_ok_code TYPE string.
 
     CONSTANTS:
       experience TYPE string VALUE '',
@@ -260,11 +270,11 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
     _5__conditional_watchpoint( ).
     _6__conditional_breakpoint( ).
     _7__debugger_scripting( ).
-    _8__abap_in_eclipse( ).
-    _9__automation( ).
-    _10_do_debug_retrospectives( ).
-    _11_educate_yourself( ).
-    _12_the_end( ).
+    _9__abap_in_eclipse( ).
+    _10_automation( ).
+    _11_do_debug_retrospectives( ).
+    _12_educate_yourself( ).
+    _13_the_end( ).
 
   ENDMETHOD.
 
@@ -1023,7 +1033,37 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-  METHOD _8__abap_in_eclipse.
+  METHOD _8__debug_external_dialog.
+
+    set_external_breakpoint( ).
+    set_user_to_dialog_user( |Utilities -> Settings -> Debugging -> User| ).
+    dialog_user_execute_ok_code( `/hext user = USERNAME_OF_DEVELOPER` ).
+
+  ENDMETHOD.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  METHOD _9__abap_in_eclipse.
 
     " Dynamic Logpoints in AiE
 
@@ -1054,7 +1094,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-  METHOD _9__automation.
+  METHOD _10_automation.
 
     use_your_keyboard( ).
 
@@ -1103,7 +1143,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-  METHOD _10_do_debug_retrospectives.
+  METHOD _11_do_debug_retrospectives.
 
     think_about(:
 
@@ -1140,7 +1180,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-  METHOD _11_educate_yourself.
+  METHOD _12_educate_yourself.
 
     you_should_watch(
       title     = 'Software Debugging'
@@ -1183,7 +1223,7 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
 
 
 
-  METHOD _12_the_end.
+  METHOD _13_the_end.
 
 
     "        __  .__                                .___
@@ -1448,6 +1488,21 @@ CLASS sit_fra_debugging_tips IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD what_makes_a_good_debugger.
+
+  ENDMETHOD.
+
+
+  METHOD set_external_breakpoint.
+
+  ENDMETHOD.
+
+
+  METHOD set_user_to_dialog_user.
+
+  ENDMETHOD.
+
+
+  METHOD dialog_user_execute_ok_code.
 
   ENDMETHOD.
 
